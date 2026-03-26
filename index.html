@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study Hours – Expert Coaching for Grades 1–10</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --teal:     #0A4A5E;
+      --teal-mid: #0D6880;
+      --gold:     #E8A020;
+      --gold-lt:  #F5C050;
+      --cream:    #FFFAF3;
+      --ink:      #1A1A2E;
+      --muted:    #6B7A8D;
+      --white:    #FFFFFF;
+      --success:  #1B8B5A;
+      --red:      #C0392B;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 6%;
+      background: rgba(255, 250, 243, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(10, 74, 94, 0.08);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 900;
+      color: var(--teal);
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-cta {
+      background: var(--teal);
+      color: var(--white);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 0.88rem; font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--teal-mid); transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 6% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(232,160,32,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 10% 80%, rgba(10,74,94,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    /* decorative circles */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 480px; height: 480px;
+      border: 60px solid rgba(232,160,32,0.08);
+      border-radius: 50%;
+      right: -100px; top: 50%; transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .deco-ring {
+      position: absolute;
+      width: 260px; height: 260px;
+      border: 30px solid rgba(10,74,94,0.06);
+      border-radius: 50%;
+      right: 60px; top: 15%;
+      pointer-events: none;
+    }
+
+    .hero-content { max-width: 620px; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(232,160,32,0.15);
+      color: #A06010;
+      border: 1px solid rgba(232,160,32,0.3);
+      padding: 6px 16px; border-radius: 50px;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.5px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge::before { content: '🎓'; font-size: 1rem; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--teal);
+      margin-bottom: 22px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); font-weight: 400;
+      line-height: 1.7; max-width: 520px;
+      margin-bottom: 38px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white);
+      padding: 15px 34px; border-radius: 50px;
+      font-size: 1rem; font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(10,74,94,0.25);
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: var(--teal-mid); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(10,74,94,0.30); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--teal);
+      border: 2px solid rgba(10,74,94,0.25);
+      padding: 13px 30px; border-radius: 50px;
+      font-size: 1rem; font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--teal); background: rgba(10,74,94,0.05); }
+
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 60px;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+    .stat-item { display: flex; flex-direction: column; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: var(--teal);
+    }
+    .stat-label { font-size: 0.82rem; color: var(--muted); font-weight: 500; }
+
+    /* ─── OFFER BANNER ─── */
+    .offer-banner {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-mid) 100%);
+      color: var(--white);
+      padding: 28px 6%;
+      display: flex; align-items: center; justify-content: center;
+      gap: 20px; flex-wrap: wrap; text-align: center;
+    }
+    .offer-banner .badge {
+      background: var(--gold);
+      color: var(--ink);
+      font-weight: 700; font-size: 1.1rem;
+      padding: 8px 20px; border-radius: 50px;
+      white-space: nowrap;
+    }
+    .offer-banner p {
+      font-size: 1.05rem; font-weight: 400; opacity: 0.93;
+    }
+    .offer-banner strong { color: var(--gold-lt); }
+    .spots-counter {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 18px; border-radius: 50px;
+      font-size: 0.88rem; font-weight: 600;
+      white-space: nowrap;
+    }
+    #spots-left-banner { color: var(--gold-lt); font-weight: 700; }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 90px 6%; }
+    .section-label {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 2px;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 12px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      color: var(--teal); line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub { font-size: 1rem; color: var(--muted); max-width: 540px; line-height: 1.7; margin-bottom: 52px; }
+
+    /* ─── WHY US ─── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .why-card {
+      background: var(--white);
+      border: 1px solid rgba(10,74,94,0.08);
+      border-radius: 20px;
+      padding: 32px 28px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .why-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--gold));
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .why-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(10,74,94,0.10); }
+    .why-card:hover::before { opacity: 1; }
+    .why-icon { font-size: 2.2rem; margin-bottom: 16px; }
+    .why-card h3 { font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .why-card p { font-size: 0.93rem; color: var(--muted); line-height: 1.65; }
+
+    /* ─── GRADES ─── */
+    .grades-section { background: var(--teal); color: var(--white); border-radius: 32px; margin: 0 3%; padding: 70px 8%; }
+    .grades-section .section-label { color: var(--gold-lt); }
+    .grades-section h2 { color: var(--white); }
+    .grades-section .section-sub { color: rgba(255,255,255,0.7); }
+    .grades-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    .grade-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 20px 12px; text-align: center;
+      transition: all 0.2s; cursor: default;
+    }
+    .grade-pill:hover { background: rgba(232,160,32,0.2); border-color: var(--gold); transform: translateY(-3px); }
+    .grade-pill .grade-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: var(--gold);
+      display: block;
+    }
+    .grade-pill .grade-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 500; margin-top: 4px; }
+
+    .subjects-row { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .subject-tag {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--white);
+      padding: 8px 18px; border-radius: 50px;
+      font-size: 0.88rem; font-weight: 500;
+    }
+
+    /* ─── OFFER CARD ─── */
+    .offer-section { text-align: center; }
+    .offer-card {
+      background: linear-gradient(135deg, #FFF8E8 0%, #FFF2CC 100%);
+      border: 2px solid rgba(232,160,32,0.35);
+      border-radius: 28px;
+      padding: 60px 48px;
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative; overflow: hidden;
+    }
+    .offer-card::before {
+      content: '✦';
+      position: absolute; top: -20px; right: 40px;
+      font-size: 120px; color: rgba(232,160,32,0.06);
+      line-height: 1;
+    }
+    .offer-big {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 900; color: var(--gold);
+      line-height: 1; margin: 12px 0;
+    }
+    .offer-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--teal); margin-bottom: 10px; }
+    .offer-card p { color: var(--muted); font-size: 0.97rem; max-width: 480px; margin: 0 auto 28px; line-height: 1.7; }
+    .offer-card .slots-bar {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--white);
+      border-radius: 50px; padding: 10px 20px;
+      max-width: 340px; margin: 0 auto 32px;
+      border: 1px solid rgba(232,160,32,0.25);
+    }
+    .slots-track {
+      flex: 1; height: 8px; background: rgba(10,74,94,0.08); border-radius: 50px; overflow: hidden;
+    }
+    .slots-fill {
+      height: 100%; background: linear-gradient(90deg, var(--gold), #E05A00);
+      border-radius: 50px;
+      transition: width 1s ease;
+    }
+    .slots-text { font-size: 0.85rem; color: var(--teal); font-weight: 600; white-space: nowrap; }
+    #spots-left-card { color: var(--red); }
+
+    /* ─── FORM ─── */
+    .form-section { padding: 90px 6%; }
+    .form-section h2 { margin-bottom: 8px; }
+    .form-wrapper {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 50px;
+      align-items: start;
+    }
+    .form-info h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--teal); margin-bottom: 20px; }
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .info-list li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 0.95rem; color: var(--ink); line-height: 1.5;
+    }
+    .info-list li::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .form-box {
+      background: var(--white);
+      border: 1px solid rgba(10,74,94,0.10);
+      border-radius: 24px;
+      padding: 40px 36px;
+      box-shadow: 0 8px 32px rgba(10,74,94,0.06);
+    }
+    .form-box h3 { font-size: 1.15rem; font-weight: 600; color: var(--teal); margin-bottom: 28px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 0.85rem; font-weight: 600; color: var(--teal);
+      margin-bottom: 7px; letter-spacing: 0.3px;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid rgba(10,74,94,0.15);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.97rem; color: var(--ink);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(10,74,94,0.08);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-submit {
+      width: 100%; padding: 15px;
+      background: var(--teal); color: var(--white);
+      border: none; border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer; margin-top: 8px;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .form-submit:hover { background: var(--teal-mid); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(10,74,94,0.2); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .form-note { font-size: 0.8rem; color: var(--muted); text-align: center; margin-top: 12px; }
+
+    /* ─── SUCCESS MODAL ─── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(10,74,94,0.6); backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+    .modal {
+      background: var(--white); border-radius: 28px;
+      padding: 48px 40px; max-width: 480px; width: 100%;
+      text-align: center;
+      box-shadow: 0 32px 80px rgba(10,74,94,0.25);
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+    .modal-icon { font-size: 3.5rem; margin-bottom: 16px; display: block; }
+    .modal h3 { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--teal); margin-bottom: 10px; }
+    .modal p { color: var(--muted); font-size: 0.97rem; line-height: 1.65; margin-bottom: 24px; }
+    .code-box {
+      background: linear-gradient(135deg, #0A4A5E, #0D6880);
+      color: var(--white); border-radius: 16px;
+      padding: 20px 24px; margin: 20px 0;
+      position: relative;
+    }
+    .code-box .code-label { font-size: 0.78rem; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .code-box .code-val {
+      font-family: 'Courier New', monospace;
+      font-size: 1.9rem; font-weight: 700;
+      letter-spacing: 3px; color: var(--gold-lt);
+    }
+    .copy-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; background: rgba(255,255,255,0.12);
+      color: var(--white); border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 16px; border-radius: 50px;
+      font-size: 0.82rem; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.2); }
+    .modal-close {
+      width: 100%; padding: 13px; border: none; border-radius: 12px;
+      background: var(--teal); color: var(--white);
+      font-family: 'DM Sans', sans-serif; font-size: 0.97rem; font-weight: 600;
+      cursor: pointer; margin-top: 8px; transition: background 0.2s;
+    }
+    .modal-close:hover { background: var(--teal-mid); }
+
+    /* Waitlist modal */
+    .modal.waitlist .modal-icon { filter: grayscale(0.3); }
+    .modal.waitlist h3 { color: #8B4513; }
+    .modal-close.waitlist { background: #8B4513; }
+    .modal-close.waitlist:hover { background: #A0522D; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--teal);
+      color: rgba(255,255,255,0.75);
+      padding: 50px 6% 30px;
+      text-align: center;
+    }
+    footer .foot-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 900; color: var(--white);
+      margin-bottom: 10px;
+    }
+    footer .foot-logo span { color: var(--gold-lt); }
+    footer p { font-size: 0.9rem; margin-bottom: 28px; }
+    footer .foot-bottom { font-size: 0.8rem; opacity: 0.5; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+    /* ─── ANIMS ─── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.85) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .grades-grid { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+      .form-wrapper { grid-template-columns: 1fr; gap: 36px; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 14px 5%; }
+      .hero { padding: 100px 5% 60px; }
+      .hero-stats { gap: 24px; }
+      .grades-grid { grid-template-columns: repeat(5, 1fr); }
+      .grade-pill { padding: 14px 6px; }
+      .grade-pill .grade-num { font-size: 1.4rem; }
+      .offer-card { padding: 40px 24px; }
+      .form-box { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .modal { padding: 36px 24px; }
+      section { padding: 60px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Study<span>Hours</span></div>
+    <a href="#enquiry" class="nav-cta">Enquire Now</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="deco-ring"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Now Enrolling · Grades 1 to 10</div>
+      <h1>Where Every<br/>Student <em>Thrives</em></h1>
+      <p class="hero-sub">Study Hours offers personalised, expert-led coaching for students from Grade 1 to 10. We build strong foundations, sharp thinking, and lifelong love for learning.</p>
+      <div class="hero-actions">
+        <a href="#enquiry" class="btn-primary">🎓 Claim 75% Off</a>
+        <a href="#why-us" class="btn-secondary">Learn More</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">1–10</span>
+          <span class="stat-label">All Grades</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">15</span>
+          <span class="stat-label">Founding Seats</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">75%</span>
+          <span class="stat-label">Early Bird Off</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFER BANNER -->
+  <div class="offer-banner">
+    <span class="badge">⚡ Limited Offer</span>
+    <p>First <strong>15 students</strong> get an exclusive <strong>75% off</strong> on coaching fees!</p>
+    <span class="spots-counter">Only <span id="spots-left-banner">…</span> spots left</span>
+  </div>
+
+  <!-- WHY US -->
+  <section id="why-us">
+    <div class="section-label">Why Study Hours</div>
+    <h2>Built for Real Results</h2>
+    <p class="section-sub">We combine structured teaching with individual attention to help every student reach their full potential.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">📚</div>
+        <h3>Structured Curriculum</h3>
+        <p>Well-organised, board-aligned syllabus designed to build concepts progressively from Grade 1 to 10.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">👨‍🏫</div>
+        <h3>Expert Faculty</h3>
+        <p>Experienced, passionate teachers who simplify tough concepts and make learning enjoyable.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📊</div>
+        <h3>Progress Tracking</h3>
+        <p>Regular tests and parent feedback sessions so you always know exactly how your child is doing.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🤝</div>
+        <h3>Small Batches</h3>
+        <p>Limited seats per batch means more individual attention, better interaction, and faster growth.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRADES -->
+  <div class="grades-section">
+    <div class="section-label">Our Coverage</div>
+    <h2>Grades 1 Through 10</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.68)">Expertly crafted programs for every grade level, ensuring no student is left behind.</p>
+    <div class="grades-grid">
+      <div class="grade-pill"><span class="grade-num">1</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">2</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">3</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">4</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">5</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">6</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">7</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">8</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">9</span><span class="grade-label">Grade</span></div>
+      <div class="grade-pill"><span class="grade-num">10</span><span class="grade-label">Grade</span></div>
+    </div>
+    <div class="subjects-row">
+      <span class="subject-tag">Mathematics</span>
+      <span class="subject-tag">Science</span>
+      <span class="subject-tag">English</span>
+      <span class="subject-tag">Hindi</span>
+      <span class="subject-tag">Social Studies</span>
+      <span class="subject-tag">EVS</span>
+      <span class="subject-tag">Marathi</span>
+    </div>
+  </div>
+
+  <!-- OFFER SECTION -->
+  <section class="offer-section">
+    <div class="section-label">Founding Batch Offer</div>
+    <h2>Don't Miss the Early Bird</h2>
+    <div class="offer-card">
+      <p style="color:var(--muted);font-size:0.88rem;letter-spacing:1px;text-transform:uppercase;font-weight:600;">Limited Seats Discount</p>
+      <div class="offer-big">75% Off</div>
+      <h3>Exclusive to the First 15 Students</h3>
+      <p>Join the founding batch of Study Hours and lock in the lowest fee we will ever offer. Each student gets a unique personal discount code — valid only for them.</p>
+      <div class="slots-bar">
+        <div class="slots-track"><div class="slots-fill" id="slots-fill" style="width:0%"></div></div>
+        <span class="slots-text"><span id="spots-left-card">…</span> / 60 left</span>
+      </div>
+      <a href="#enquiry" class="btn-primary">Grab Your Spot Now →</a>
+    </div>
+  </section>
+
+  <!-- ENQUIRY FORM -->
+  <section class="form-section" id="enquiry">
+    <div class="section-label">Enrolment Enquiry</div>
+    <h2>Reserve Your Seat Today</h2>
+    <div class="form-wrapper">
+      <div class="form-info">
+        <h3>What happens after you submit?</h3>
+        <ul class="info-list">
+          <li>We instantly check if you're within the first 15 students</li>
+          <li>If yes, you receive your <strong>unique 75% off code</strong> right on screen</li>
+          <li>Our team will call you within 24 hours to confirm your seat</li>
+          <li>Bring your code during fee payment to avail the discount</li>
+          <li>Spots fill up fast — don't wait!</li>
+        </ul>
+        <div style="margin-top:36px;padding:20px 24px;background:rgba(232,160,32,0.10);border:1px solid rgba(232,160,32,0.25);border-radius:16px;">
+          <p style="font-size:0.9rem;color:var(--ink);line-height:1.65;">
+            <strong style="color:var(--teal);">📍 Study Hours Coaching</strong><br/>
+            Pimpri-Chinchwad, Maharashtra<br/>
+            <span style="color:var(--muted);">Batch timings shared after confirmation</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-box" id="form-box">
+        <h3>Fill Your Details</h3>
+        <div id="enquiry-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Student Name *</label>
+              <input type="text" id="f-name" placeholder="Full name" required />
+            </div>
+            <div class="form-group">
+              <label>Grade *</label>
+              <select id="f-grade" required>
+                <option value="">Select Grade</option>
+                <option>Grade 1</option><option>Grade 2</option><option>Grade 3</option>
+                <option>Grade 4</option><option>Grade 5</option><option>Grade 6</option>
+                <option>Grade 7</option><option>Grade 8</option><option>Grade 9</option>
+                <option>Grade 10</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Parent / Guardian Name *</label>
+              <input type="text" id="f-parent" placeholder="Parent's name" required />
+            </div>
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input type="tel" id="f-phone" placeholder="10-digit mobile" maxlength="10" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>School Name</label>
+            <input type="text" id="f-school" placeholder="Your child's school (optional)" />
+          </div>
+          <button class="form-submit" id="submit-btn" onclick="handleSubmit()">
+            <span id="btn-text">Submit Enquiry & Check Discount</span>
+          </button>
+          <p class="form-note">🔒 Your details are private and will never be shared.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-logo">Study<span>Hours</span></div>
+    <p>Expert coaching for Grades 1–10 · Pimpri-Chinchwad, Maharashtra</p>
+    <div class="foot-bottom">© 2025 Study Hours. All rights reserved.</div>
+  </footer>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal-box">
+      <span class="modal-icon" id="modal-icon">🎉</span>
+      <h3 id="modal-title">Congratulations!</h3>
+      <p id="modal-msg">You're among the first 15 students! Here is your exclusive 75% off code:</p>
+      <div class="code-box" id="code-box">
+        <div class="code-label">Your Personal Discount Code</div>
+        <div class="code-val" id="modal-code">SH75-XXXX</div>
+        <button class="copy-btn" onclick="copyCode()">📋 Copy Code</button>
+      </div>
+      <p style="font-size:0.85rem;color:var(--muted);margin-top:4px;">Show this code to the coach when paying fees. This code is unique to you.</p>
+      <button class="modal-close" onclick="closeModal()">Done ✓</button>
+    </div>
+  </div>
+
+  <script>
+    // ─── CONFIG ───────────────────────────────────────────
+    // REPLACE with your Google Apps Script deployment URL:
+    const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+    // ─────────────────────────────────────────────────────
+
+    const TOTAL_SPOTS = 60;
+
+    async function loadSpots() {
+      try {
+        const res = await fetch(`${SCRIPT_URL}?action=getCount`);
+        const data = await res.json();
+        const taken = parseInt(data.count) || 0;
+        const left = Math.max(0, TOTAL_SPOTS - taken);
+        updateSpotsUI(left);
+      } catch {
+        updateSpotsUI("?");
+      }
+    }
+
+    function updateSpotsUI(left) {
+      document.getElementById("spots-left-banner").textContent = typeof left === "number" ? left : "?";
+      document.getElementById("spots-left-card").textContent = typeof left === "number" ? left : "?";
+      if (typeof left === "number") {
+        const pct = Math.min(100, ((TOTAL_SPOTS - left) / TOTAL_SPOTS) * 100);
+        document.getElementById("slots-fill").style.width = pct + "%";
+      }
+    }
+
+    async function handleSubmit() {
+      const name   = document.getElementById("f-name").value.trim();
+      const grade  = document.getElementById("f-grade").value;
+      const parent = document.getElementById("f-parent").value.trim();
+      const phone  = document.getElementById("f-phone").value.trim();
+      const school = document.getElementById("f-school").value.trim();
+
+      if (!name || !grade || !parent || !phone) {
+        alert("Please fill all required fields.");
+        return;
+      }
+      if (!/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+      }
+
+      const btn = document.getElementById("submit-btn");
+      btn.disabled = true;
+      document.getElementById("btn-text").textContent = "Submitting…";
+
+      try {
+        const params = new URLSearchParams({ action:"submit", name, grade, parent, phone, school });
+        const res = await fetch(`${SCRIPT_URL}?${params}`);
+        const data = await res.json();
+
+        if (data.status === "success") {
+          // Got a code — within first 15
+          showSuccessModal(data.code, name);
+          loadSpots();
+        } else if (data.status === "full") {
+          showWaitlistModal(name);
+        } else {
+          alert("Something went wrong. Please try again.");
+          btn.disabled = false;
+          document.getElementById("btn-text").textContent = "Submit Enquiry & Check Discount";
+        }
+      } catch (e) {
+        alert("Could not connect. Please check your internet and try again.");
+        btn.disabled = false;
+        document.getElementById("btn-text").textContent = "Submit Enquiry & Check Discount";
+      }
+    }
+
+    function showSuccessModal(code, name) {
+      document.getElementById("modal-icon").textContent = "🎉";
+      document.getElementById("modal-title").textContent = `You made it, ${name.split(" ")[0]}!`;
+      document.getElementById("modal-msg").textContent = "You're among the first 60 students! Here is your exclusive personal 75% off code:";
+      document.getElementById("modal-code").textContent = code;
+      document.getElementById("code-box").style.display = "block";
+      const modal = document.getElementById("modal-box");
+      modal.classList.remove("waitlist");
+      const closeBtn = document.querySelector(".modal-close");
+      closeBtn.classList.remove("waitlist");
+      closeBtn.textContent = "Awesome, saved it! ✓";
+      document.getElementById("modal-overlay").classList.add("show");
+    }
+
+    function showWaitlistModal(name) {
+      document.getElementById("modal-icon").textContent = "😔";
+      document.getElementById("modal-title").textContent = "Spots Are Full";
+      document.getElementById("modal-msg").textContent = `Sorry ${name.split(" ")[0]}, all 15 founding seats have been taken. We've noted your details and will contact you for the next batch!`;
+      document.getElementById("code-box").style.display = "none";
+      const modal = document.getElementById("modal-box");
+      modal.classList.add("waitlist");
+      const closeBtn = document.querySelector(".modal-close");
+      closeBtn.classList.add("waitlist");
+      closeBtn.textContent = "Okay, understood";
+      document.getElementById("modal-overlay").classList.add("show");
+    }
+
+    function closeModal() {
+      document.getElementById("modal-overlay").classList.remove("show");
+    }
+
+    function copyCode() {
+      const code = document.getElementById("modal-code").textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector(".copy-btn");
+        btn.textContent = "✅ Copied!";
+        setTimeout(() => btn.textContent = "📋 Copy Code", 2000);
+      });
+    }
+
+    // Load spots on page load
+    window.addEventListener("load", loadSpots);
+  </script>
+</body>
+</html>
